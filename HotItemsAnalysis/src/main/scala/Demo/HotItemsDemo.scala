@@ -43,16 +43,19 @@ object HotItemsDemo {
 
     // 从文件读取数据
     //    val inputPath: String = HotItemsDemo.getClass.getResource("UserBehavior.csv").getPath
-    val inputStream: DataStream[String] = env.readTextFile("E:\\A_data\\3.code\\UserBehaviorAnalysis\\HotItemsAnalysis\\src\\main\\resources\\UserBehavior.csv")
+    //    val inputStream: DataStream[String] = env.readTextFile("E:\\A_data\\3.code\\UserBehaviorAnalysis\\HotItemsAnalysis\\src\\main\\resources\\UserBehavior.csv")
 
-    //    // 从kafka读取数据
-    //    val properties = new Properties()
-    //    properties.setProperty("bootstrap.servers", "hadoop104:9092")
-    //    // properties.setProperty("group.id", "consumer-group")
-    //    properties.setProperty("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
-    //    properties.setProperty("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
+    // 从kafka读取数据
+    val properties = new Properties()
+    properties.setProperty("bootstrap.servers", "hadoop104:9092")
+    properties.setProperty("group.id", "consumer-group")
+    properties.setProperty("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
+    properties.setProperty("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
     //    properties.setProperty("auto.offset.reset", "latest")
-    //    val inputStream: DataStream[String] = env.addSource( new FlinkKafkaConsumer[String]("hotitems", new SimpleStringSchema(), properties) )
+    val kafkaConsumer: FlinkKafkaConsumer[String] = new FlinkKafkaConsumer[String]("hotitems", new SimpleStringSchema(), properties)
+    kafkaConsumer.setCommitOffsetsOnCheckpoints(true)
+    kafkaConsumer.setStartFromGroupOffsets()
+    val inputStream: DataStream[String] = env.addSource(kafkaConsumer)
 
     // 将数据转换成样例类类型，并且提取timestamp定义watermark
     val dataStream: DataStream[UserBehavior] = inputStream
