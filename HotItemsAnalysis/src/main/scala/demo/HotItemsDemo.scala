@@ -1,4 +1,4 @@
-package Demo
+package demo
 
 import java.sql.Timestamp
 import java.util.Properties
