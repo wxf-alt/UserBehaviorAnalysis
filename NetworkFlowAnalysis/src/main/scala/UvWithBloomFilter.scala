@@ -3,7 +3,6 @@ import java.lang
 import PageView.UserBehavior
 import UniqueVisitor.UvCount
 import org.apache.flink.configuration.{Configuration, RestOptions}
-import org.apache.flink.runtime.operators.util.BloomFilter
 import org.apache.flink.streaming.api.TimeCharacteristic
 import org.apache.flink.streaming.api.functions.timestamps.BoundedOutOfOrdernessTimestampExtractor
 import org.apache.flink.streaming.api.scala._
@@ -29,7 +28,8 @@ object UvWithBloomFilter {
     // 设置时间语义 事件时间语义
     env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime)
 
-    val inputStream: DataStream[String] = env.readTextFile("E:\\A_data\\3.code\\UserBehaviorAnalysis\\HotItemsAnalysis\\src\\main\\resources\\UserBehavior.csv")
+    val inputPath: String = "E:\\A_data\\3.code\\UserBehaviorAnalysis\\HotItemsAnalysis\\src\\main\\resources\\UserBehavior.csv"
+    val inputStream: DataStream[String] = env.readTextFile(inputPath)
 
     val mapStream: DataStream[UserBehavior] = inputStream.map(x => {
       val str: Array[String] = x.split(",")
@@ -95,6 +95,9 @@ object UvWithBloomFilter {
       }
     }
 
+    override def close(): Unit = {
+      jedis.close()
+    }
   }
 
   // 自定义一个布隆过滤器
