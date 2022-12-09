@@ -11,7 +11,7 @@ import org.apache.flink.util.Collector
 /**
  * @Auther: wxf
  * @Date: 2022/11/29 17:12:53
- * @Description: OrderTimeoutProcess
+ * @Description: OrderTimeoutProcess  使用 ProcessFunction 实现 订单超时
  * @Version 1.0.0
  */
 object OrderTimeoutProcess {

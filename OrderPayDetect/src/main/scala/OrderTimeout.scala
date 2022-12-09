@@ -13,7 +13,7 @@ import org.apache.flink.streaming.api.windowing.time.Time
 /**
  * @Auther: wxf
  * @Date: 2022/11/25 16:18:38
- * @Description: OrderTimeout
+ * @Description: OrderTimeout   订单超时
  * @Version 1.0.0
  */
 object OrderTimeout {

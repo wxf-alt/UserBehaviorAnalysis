@@ -6,10 +6,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="HotItemsAnalysis" />
         <module name="NetworkFlowAnalysis" />
-        <module name="OrderPayDetect" />
+        <module name="HotItemsAnalysis" />
         <module name="MarketAnalysis" />
+        <module name="OrderPayDetect" />
         <module name="LoginFailDetect" />
       </profile>
     </annotationProcessing>
